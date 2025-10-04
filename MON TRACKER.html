@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracker de Transformation 21 Jours - ELEVATION HUB</title>
+    <style>
+        /* CSS AVEC AURA "PREMIUM MALE ALPHA" */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1c1c1c 100%);
+            padding: 20px;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+            border: 1px solid #333;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #b8860b;
+        }
+
+        .logo {
+            font-size: 2.8em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #b8860b, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #c0c0c0;
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #252525;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid #b8860b;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .stat-number {
+            font-size: 2.8em;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 0.9em;
+        }
+
+        .week-section {
+            margin-bottom: 30px;
+        }
+
+        .week-title {
+            background: linear-gradient(135deg, #2a2a2a, #4a4a4a);
+            color: #ffd700;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            letter-spacing: 0.8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            border: 1px solid #333;
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .days-grid-small {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .day-card {
+            background: #202020;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #444;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            color: #e0e0e0;
+        }
+
+        .day-card.completed {
+            border-left-color: #28a745; /* Vert pour complété */
+            background: #2a3a2a;
+            box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        .day-card.partial {
+            border-left-color: #ffc107; /* Jaune pour partiel */
+            background: #3a3a2a;
+            box-shadow: 0 5px 20px rgba(255, 193, 7, 0.2);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .day-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #f0f0f0;
+        }
+
+        .day-score {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .habits-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .habit-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .habit-checkbox {
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            accent-color: #b8860b;
+            background-color: #333;
+            border: 1px solid #555;
+        }
+        
+        .habit-checkbox:checked {
+            background-color: #ffd700;
+            border-color: #ffd700;
+        }
+
+
+        .habit-label {
+            flex: 1;
+            font-size: 0.95em;
+            color: #e0e0e0;
+        }
+
+        .notes-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+
+        .notes-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #444;
+            border-radius: 5px;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 0.9em;
+            background-color: #2a2a2a;
+            color: #f0f0f0;
+            
+        }
+
+        .notes-textarea::placeholder {
+            color: #888;
+        }
+
+        .notes-textarea:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.3);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #b8860b, #ffd700);
+            color: #202020;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: #444;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .btn-reset {
+            background: #8b0000;
+            color: white;
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            filter: brightness(1.1);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #333;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 1px solid #444;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #b8860b, #ffd700);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #202020;
+            font-weight: bold;
+            white-space: nowrap;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-size: 0.9em;
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            .action-buttons, .progress-bar, .stats-grid {
+                display: none;
+            }
+            .container {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                background: white;
+            }
+            .day-card {
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+                background: white;
+                color: black;
+            }
+            .week-title {
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+                background: #eee;
+                color: #333;
+                border: 1px solid #ccc;
+            }
+            .logo {
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+                background: none;
+                -webkit-text-fill-color: black;
+                color: black;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .logo {
+                font-size: 1.8em;
+            }
+            
+            .stats-grid, .days-grid, .days-grid-small {
+                grid-template-columns: 1fr;
+            }
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body onload="initTracker()">
+    <div class="container">
+        <div class="header">
+            <div class="logo">🎯 ELEVATION HUB</div>
+            <div class="subtitle">Tracker de Transformation - 21 Jours</div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar">0%</div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalDays">0/21</div>
+                <div class="stat-label">Jours complétés</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalScore">0%</div>
+                <div class="stat-label">Score global</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="streak">0</div>
+                <div class="stat-label">Série en cours</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="bestStreak">0</div>
+                <div class="stat-label">Meilleure série</div>
+            </div>
+        </div>
+
+        <div id="tracker-content">
+            </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="saveProgress()">💾 Sauvegarder ma progression</button>
+            <button class="btn btn-secondary" onclick="loadProgress()">📂 Charger ma progression</button>
+            <button class="btn btn-secondary" onclick="window.print()">🖨️ Imprimer mon tracker</button>
+            <button class="btn btn-reset" onclick="resetAll()">🔄 Recommencer</button>
+            <button class="btn btn-primary" onclick="exportData()">📊 Exporter mes données</button>
+        </div>
+    </div>
+
+    <script>
+        // Clé de stockage local pour ce client
+        const STORAGE_KEY = 'elevationTrackerData';
+        
+        // --- CONFIGURATION DES HABITUDES PAR JOUR (C'EST ICI QUE VOUS PERSONNALISEZ) ---
+        const HABITS_CONFIG = [
+            // SEMAINE 1 : FONDATIONS (Exemple avec l'aura Alpha)
+            { day: 1, title: "JOUR 1 - Lancement de l'Élévation", habits: ["Réveil à 5h30 (non négociable)", "Douche froide de 60 secondes", "Séance de Deep Work (60 min)", "Lecture 10 pages d'un livre", "Planification du lendemain avant 21h00"]},
+            { day: 2, title: "JOUR 2 - Routine Matinale Ancrée", habits: ["Respect de l'heure de réveil", "Méditation 10 min", "Micro-entraînement de force (10 min)", "Zéro réseaux sociaux avant midi", "Journal du soir complété"]},
+            { day: 3, title: "JOUR 3 - Le Pouvoir du 1%", habits: ["Habitudes maintenues", "Tâche la plus difficile du jour complétée avant 10h", "Déjeuner sans écran", "5 min d'auto-évaluation", "Définir l'objectif n°1 pour demain"]},
+            { day: 4, title: "JOUR 4 - Discipline Émotionnelle", habits: ["Habitudes maintenues", "Gestion d'une frustration sans réagir émotionnellement", "1h de sport intense", "Boire 2 litres d'eau", "Couper les notifications après 20h"]},
+            { day: 5, title: "JOUR 5 - Momentum", habits: ["Toutes les micro-habitudes du matin réalisées", "Travail focus de 3 heures", "Networking/Contact professionnel", "Réflexion sur les 3 valeurs du jour", "Éteindre les lumières bleues (télé/écran) 1h avant de dormir"]},
+            { day: 6, title: "JOUR 6 - Sortir de sa zone", habits: ["Habitudes maintenues", "Faire quelque chose qui rend mal à l'aise (ex: appel difficile)", "Dîner sans viande (optionnel)", "Temps de loisir actif (vs passif)", "Préparation mentale pour le Jour 7 (Repos Actif)"]},
+            { day: 7, title: "JOUR 7 - Repos du Guerrier", habits: ["Réveil non tardif (max 8h)", "Réflexion hebdomadaire (journal)", "Planification de la semaine 2", "1h de marche dans la nature", "Zéro travail professionnel"]},
+            
+            // SEMAINE 2 : CONSISTANCE
+            { day: 8, title: "JOUR 8 - L'Inarrêtable", habits: ["Habitudes maintenues", "Atteinte de 100% du score", "Relecture de ses objectifs pour la semaine", "Lecture de 20 min", "Préparation des vêtements/affaires pour le matin"]},
+            { day: 9, title: "JOUR 9 - Profondeur de Travail", habits: ["Habitudes maintenues", "3 sessions de Deep Work (45 min min)", "Challenge : Ne pas vérifier son téléphone pendant 2h", "5 min de gratitude", "Appel/message à un mentor/modèle"]},
+            { day: 10, title: "JOUR 10 - Milieu du Parcours", habits: ["Atteinte de 100% du score", "20 min d'étirement/mobilité", "Dépassement d'un objectif auto-imposé", "Éviter les sucres ajoutés", "Journal du soir : 3 choses apprises"]},
+            { day: 11, title: "JOUR 11 - Résilience", habits: ["Habitudes maintenues", "Faire face à un échec/problème sans paniquer", "Amélioration d'une compétence technique/professionnelle (30 min)", "Nettoyage/rangement de l'espace de travail", "Journal du soir complété"]},
+            { day: 12, title: "JOUR 12 - Vision Claire", habits: ["Habitudes maintenues", "Vision board/Vision statement revu", "Activité physique intensive", "Appel vidéo avec un proche/ami", "Préparer un repas équilibré"]},
+            { day: 13, title: "JOUR 13 - Création vs Consommation", habits: ["Passer plus de temps à créer qu'à consommer", "Planification de la semaine 3", "Rendez-vous avec soi-même (30 min sans distraction)", "Dormir 7h minimum", "Faire le bilan des 13 derniers jours"]},
+            { day: 14, title: "JOUR 14 - Reset", habits: ["Réveil non tardif (max 8h)", "Grand rangement de la maison/du bureau", "Lecture plaisir (non-business)", "Zéro alcool/sucre/junk food", "Préparation et méditation pour la semaine 3"]},
+
+            // SEMAINE 3 : OPTIMISATION ET ANCRAGE
+            { day: 15, title: "JOUR 15 - Nouveau Standard", habits: ["Réveil à 5h00 (le 5AM Club)", "2h de Deep Work avant 9h", "Habitudes maintenues", "Nouvelle technique de productivité testée", "Journal du soir complété"]},
+            { day: 16, title: "JOUR 16 - Le Maître de Soi", habits: ["Atteinte de 100% du score", "15 min de gratitude et d'affirmation", "Résoudre le problème le plus complexe du jour", "Relecture des notes de la semaine 1", "Dormir à une heure fixe (avant 22h30)"]},
+            { day: 17, title: "JOUR 17 - Excellence", habits: ["Habitudes maintenues", "Finir une tâche avec 100% d'excellence (vs 80%)", "Sport sans interruption (No Phone)", "Apprentissage d'une nouvelle chose (15 min)", "Planification du jour de demain en détail"]},
+            { day: 18, title: "JOUR 18 - Héritage", habits: ["Habitudes maintenues", "Acte de mentorat/aide envers quelqu'un d'autre", "Éviter de se plaindre (0 plainte)", "Se récompenser (petite récompense non-alimentaire/non-écran)", "Journal du soir sur le futur soi"]},
+            { day: 19, title: "JOUR 19 - Dernier Sprint", habits: ["Atteinte de 100% du score", "Faire un bilan des réussites de ces 19 jours", "Manger des légumes à chaque repas", "Faire une sieste courte (Power Nap) si besoin", "Préparation du Jour 20 (le plus difficile)"]},
+            { day: 20, title: "JOUR 20 - Le Peak", habits: ["Réveil le plus tôt de la semaine", "Meilleure performance de Deep Work", "Séance de sport la plus longue/difficile", "Écrire une lettre au 'moi' d'avant le challenge", "Atteindre 100% pour la journée"], isFinal: true },
+            { day: 21, title: "JOUR 21 - Intégration", habits: ["Bilan global des 21 jours complété", "Plan d'action pour le mois prochain", "Lecture de toutes les notes", "Partage des 3 plus grandes réussites", "Décision sur l'habitude à maintenir en priorité (après le challenge)"], isFinal: true }
+        ];
+        // --- FIN DE LA CONFIGURATION ---
+
+
+        // FONCTIONS DE LOGIQUE ET DE SAUVEGARDE
+
+        /** Génère le HTML pour un seul jour */
+        function generateDayHTML(config) {
+            const numHabits = config.habits.length;
+            let habitsHTML = `<div class="habits-list">`;
+
+            config.habits.forEach((habit, index) => {
+                const habitId = `day-${config.day}-habit-${index}`;
+                habitsHTML += `
+                    <div class="habit-item">
+                        <input type="checkbox" id="${habitId}" class="habit-checkbox" 
+                               onchange="updateProgress(${config.day}, ${index}, this.checked)">
+                        <label for="${habitId}" class="habit-label">${habit}</label>
+                    </div>
+                `;
+            });
+
+            habitsHTML += `</div>`;
+
+            const notesId = `day-${config.day}-notes`;
+            const notesHTML = `
+                <div class="notes-section">
+                    <textarea id="${notesId}" class="notes-textarea" 
+                              placeholder="Notes et réflexions du jour..."
+                              onblur="saveNotes(${config.day}, this.value)"></textarea>
+                </div>
+            `;
+
+            return `
+                <div class="day-card" id="day-${config.day}-card">
+                    <div class="day-header">
+                        <div class="day-title">${config.title}</div>
+                        <div class="day-score" id="day-${config.day}-score">0/${numHabits}</div>
+                    </div>
+                    ${habitsHTML}
+                    ${notesHTML}
+                </div>
+            `;
+        }
+
+        /** Initialise le tracker : génère le HTML et charge les données */
+        function initTracker() {
+            const trackerContent = document.getElementById('tracker-content');
+            trackerContent.innerHTML = '';
+            
+            // Génération par semaine
+            for (let i = 0; i < 21; i += 7) {
+                const weekNum = Math.floor(i / 7) + 1;
+                const weekTitleText = document.querySelector(`.week-title:nth-child(${weekNum})`) ? 
+                                      document.querySelector(`.week-title:nth-child(${weekNum})`).textContent : 
+                                      `SEMAINE ${weekNum}`;
+                
+                const weekSection = document.createElement('div');
+                weekSection.className = 'week-section';
+                weekSection.innerHTML = `<div class="week-title">${weekTitleText}</div>`;
+                
+                const daysGrid = document.createElement('div');
+                daysGrid.className = 'days-grid';
+                daysGrid.id = `week-${weekNum}-grid`;
+                
+                for (let j = 0; j < 7 && (i + j) < HABITS_CONFIG.length; j++) {
+                    const dayConfig = HABITS_CONFIG[i + j];
+                    daysGrid.innerHTML += generateDayHTML(dayConfig);
+                }
+                
+                weekSection.appendChild(daysGrid);
+                trackerContent.appendChild(weekSection);
+            }
+
+            loadProgress(false); // Charge les données au démarrage
+        }
+
+        /** Met à jour la progression locale après une coche */
+        function updateProgress(day, habitIndex, isChecked) {
+            let data = loadData();
+            data.days[day - 1].habits[habitIndex] = isChecked;
+            saveData(data);
+            updateUI(); // Met à jour l'affichage
+        }
+
+        /** Sauvegarde les notes locales */
+        function saveNotes(day, notes) {
+            let data = loadData();
+            data.days[day - 1].notes = notes;
+            saveData(data);
+            // La sauvegarde est implicite (onblur) mais on garde la fonction pour la clarté
+        }
+
+        /** Charge les données depuis le localStorage */
+        function loadData() {
+            const storedData = localStorage.getItem(STORAGE_KEY);
+            if (storedData) {
+                return JSON.parse(storedData);
+            }
+
+            // Structure de données initiale (vierge)
+            return {
+                days: HABITS_CONFIG.map(config => ({
+                    habits: new Array(config.habits.length).fill(false),
+                    notes: '',
+                })),
+                lastSaved: new Date().toLocaleString()
+            };
+        }
+
+        /** Sauvegarde les données dans le localStorage */
+        function saveData(data) {
+            data.lastSaved = new Date().toLocaleString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        /** Met à jour l'interface utilisateur (UI) */
+        function updateUI() {
+            const data = loadData();
+            let totalHabits = 0;
+            let completedHabits = 0;
+            let currentStreak = 0;
+            let bestStreak = parseInt(localStorage.getItem('bestStreak') || '0');
+
+            data.days.forEach((dayData, dayIndex) => {
+                const dayNumber = dayIndex + 1;
+                const config = HABITS_CONFIG[dayIndex];
+                const numHabits = config.habits.length;
+                const dayCompletedHabits = dayData.habits.filter(h => h).length;
+                const completionRate = numHabits > 0 ? dayCompletedHabits / numHabits : 0;
+                
+                totalHabits += numHabits;
+                completedHabits += dayCompletedHabits;
+
+                // Mise à jour de l'UI du jour
+                const dayCard = document.getElementById(`day-${dayNumber}-card`);
+                const dayScore = document.getElementById(`day-${dayNumber}-score`);
+                const notesTextarea = document.getElementById(`day-${dayNumber}-notes`);
+
+                if (dayCard) {
+                    dayCard.classList.remove('completed', 'partial');
+                    if (completionRate === 1) {
+                        dayCard.classList.add('completed');
+                    } else if (completionRate > 0) {
+                        dayCard.classList.add('partial');
+                    }
+                }
+                
+                if (dayScore) {
+                    dayScore.textContent = `${dayCompletedHabits}/${numHabits}`;
+                }
+
+                if (notesTextarea) {
+                    notesTextarea.value = dayData.notes;
+                }
+
+                // Récupération de l'état des checkboxes
+                config.habits.forEach((_, habitIndex) => {
+                    const checkbox = document.getElementById(`day-${dayNumber}-habit-${habitIndex}`);
+                    if (checkbox) {
+                        checkbox.checked = dayData.habits[habitIndex];
+                    }
+                });
+                
+                // Calcul de la série (Streak)
+                if (completionRate === 1) {
+                    currentStreak++;
+                } else if (currentStreak > 0 && completionRate < 1) {
+                    // Si un jour n'est pas complété, la série s'arrête. On compare et reset.
+                    bestStreak = Math.max(bestStreak, currentStreak);
+                    currentStreak = 0; 
+                }
+                
+            });
+            
+            // Gestion de la série finale (au cas où la boucle se termine sur une série en cours)
+            bestStreak = Math.max(bestStreak, currentStreak);
+            localStorage.setItem('bestStreak', bestStreak);
+
+
+            // Mise à jour des statistiques globales
+            const overallCompletion = totalHabits > 0 ? (completedHabits / totalHabits) * 100 : 0;
+            const completedDays = data.days.filter((dayData, index) => 
+                HABITS_CONFIG[index].habits.length > 0 && 
+                dayData.habits.filter(h => h).length === HABITS_CONFIG[index].habits.length
+            ).length;
+            
+            document.getElementById('totalDays').textContent = `${completedDays}/21`;
+            document.getElementById('totalScore').textContent = `${overallCompletion.toFixed(1)}%`;
+            document.getElementById('streak').textContent = currentStreak;
+            document.getElementById('bestStreak').textContent = bestStreak;
+
+            // Mise à jour de la barre de progression
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = `${overallCompletion}%`;
+            progressBar.textContent = `${overallCompletion.toFixed(1)}%`;
+        }
+
+        /** Fonction à appeler par le bouton pour sauvegarder */
+        function saveProgress() {
+            saveData(loadData()); // Assure la mise à jour de lastSaved
+            alert(`Progression sauvegardée ! Dernière sauvegarde: ${loadData().lastSaved}`);
+        }
+
+        /** Fonction à appeler par le bouton pour charger */
+        function loadProgress(show_alert = true) {
+            updateUI(); // Recharge les données et met à jour l'interface
+            if (show_alert) {
+                 const lastSaved = loadData().lastSaved;
+                 alert(`Progression chargée ! Dernière sauvegarde: ${lastSaved}`);
+            }
+        }
+        
+        /** Exporte les données au format JSON */
+        function exportData() {
+            const data = loadData();
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "tracker_data_" + new Date().toISOString().slice(0, 10) + ".json");
+            document.body.appendChild(downloadAnchorNode); 
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+            alert("Vos données ont été exportées !");
+        }
+
+        /** Réinitialise tout le tracker */
+        function resetAll() {
+            if (confirm("Êtes-vous sûr de vouloir tout recommencer ? Toutes les données seront effacées.")) {
+                localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem('bestStreak'); // Réinitialise aussi la meilleure série
+                initTracker(); // Réinitialise l'interface
+                alert("Le tracker a été réinitialisé. Bonne chance pour le nouveau cycle !");
+            }
+        }
+    </script>
+</body>
+</html>
